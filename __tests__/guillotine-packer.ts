@@ -34,53 +34,6 @@ Array [
 `)
 })
 
-test('pack a single', () => {
-  const items = [
-    {
-      name: 'test',
-      width: 20,
-      height: 20
-    } as Item,
-    {
-      name: 'test2',
-      width: 15,
-      height: 5
-    } as Item
-  ]
-
-  const result = packer({
-    binHeight: 30,
-    binWidth: 40,
-    items
-  })
-  expect(result).toMatchInlineSnapshot(`
-Array [
-  Array [
-    Object {
-      "bin": 1,
-      "height": 5,
-      "item": Object {
-        "name": "test2",
-      },
-      "width": 15,
-      "x": 0,
-      "y": 0,
-    },
-    Object {
-      "bin": 1,
-      "height": 20,
-      "item": Object {
-        "name": "test",
-      },
-      "width": 20,
-      "x": 0,
-      "y": 5,
-    },
-  ],
-]
-`)
-})
-
 test('should rotate items if it results in more efficent packing', () => {
   const result = packer(
     {
@@ -136,51 +89,6 @@ test('should not rotate items if allow rotation is disabled', () => {
     }
   )
   expect(result).toHaveLength(2)
-})
-
-test('pack two', () => {
-  const result = packer({
-    binHeight: 30,
-    binWidth: 30,
-    items: [
-      {
-        name: 'test2',
-        width: 20,
-        height: 20
-      } as Item,
-      {
-        name: 'test',
-        width: 20,
-        height: 20
-      } as Item
-    ]
-  })
-  expect(result).toMatchInlineSnapshot(`
-Array [
-  Array [
-    Object {
-      "bin": 1,
-      "height": 20,
-      "item": Object {
-        "name": "test2",
-      },
-      "width": 20,
-      "x": 0,
-      "y": 0,
-    },
-    Object {
-      "bin": 1,
-      "height": 20,
-      "item": Object {
-        "name": "test",
-      },
-      "width": 20,
-      "x": 20,
-      "y": 0,
-    },
-  ],
-]
-`)
 })
 
 test('create kerfs if provided', () => {
