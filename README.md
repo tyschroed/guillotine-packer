@@ -7,7 +7,7 @@
 
 ## What is this?
 
-This is a simple little utility to parse free text dimensions (i.e. 2ft, 1 1/2in, 6", 3cm) into their numerical values. It supports imperial and metric values, including shorthand equivalents. It even handles the pesky curly quotes that newer releases of iOS love to use!
+This is a bin packing implementation based off of [this](http://pds25.egloos.com/pds/201504/21/98/RectangleBinPack.pdf) fantastic paper. Originally developed as part of [Part Placer](https://github.com/tyschroed/part-placer]) for the woodworking community, however it can be used for all sorts of bin packing applications! Guillotine based algorithms translate well for many real-world material use cases, as they nicely balance outputs that can easily performed on machinery with efficient material use.
 
 ## Getting Started
 
@@ -20,42 +20,73 @@ npm install guillotine-packer
 ### Usage
 
 ```javascript
-import { parseDimension, units } from 'guillotine-packer'
+import { packer } from 'guillotine-packer'
 
-parseDimension(`3ft`)
-// -> 36
+  const result = packer({
+    binHeight: 30,
+    binWidth: 30,
+    items: [
+      {
+        name: 'test2',
+        width: 20,
+        height: 20
+      } as Item,
+      {
+        name: 'test',
+        width: 20,
+        height: 20
+      } as Item
+    ]
+  })
 
-parseDimension(`1' 6"`)
-// -> 18
+  /* OUTPUT:
 
-// specify units output value should be in
-parseDimension(`24"`, { outputUnits: units.ft })
-// -> 2
+  Array [
+  Array [
+    Object {
+      "bin": 1,
+      "height": 20,
+      "item": Object {
+        "name": "test2",
+      },
+      "width": 20,
+      "x": 0,
+      "y": 0,
+    },
+    Object {
+      "bin": 1,
+      "height": 20,
+      "item": Object {
+        "name": "test",
+      },
+      "width": 20,
+      "x": 20,
+      "y": 0,
+    },
+  ],
+]
 
-// specify the assumed units if none are provided
-parseDimension(`2`, { defaultUnits: units.ft })
-// -> 24
+  */
 ```
 
-### Options
+#### Parameters
 
-The second parameter is an optional options object, with the following properties:
+##### Inputs
 
-| Option       | Default  | Description                                          |
-| ------------ | -------- | ---------------------------------------------------- |
-| defaultUnits | units.in | If no units provided, parser will assume these units |
-| outputUnits  | units.in | Dimensions that output will be converted to          |
+| Property  | Default   | Description                                                                                                                                                |
+| --------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| binHeight | undefined | `required` Height of the bin we will be packing the items into                                                                                             |
+| binWidth  | undefined | `required` Width of the bin we will be packing the items into                                                                                              |
+| items     | undefined | `required` Array of items. Each item should have a width and height property. Additional properties will be included in the `item` property of the results |
 
-For both options, valid values are one of:
+##### Options
 
-```typescript
-export enum units {
-  in = 'in',
-  ft = 'ft',
-  mm = 'mm',
-  m = 'm',
-  cm = 'cm'
-}
-```
+| Option            | Default   | Description                                                                                         |
+| ----------------- | --------- | --------------------------------------------------------------------------------------------------- |
+| kerfSize          | 0         | The size of the blade kerf to account for when splitting rectanges                                  |
+| sortStrategy      | undefined | `SortStrategy` to use. Undefined will try all strategies and pick which performs the best.          |
+| splitStrategy     | undefined | `SplitStrategy` to use. Undefined will try all strategies and pick which performs the best.         |
+| selectionStrategy | undefined | `SelectionStrategy` to use. Undefined will try all strategies and pick which performs the best.     |
+| allowRotation     | true      | Whether items may be rotated. If true, items will be rotated if doing so maximizes the offcut size. |
 
 :beers:

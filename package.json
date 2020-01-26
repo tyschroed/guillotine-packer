@@ -1,6 +1,6 @@
 {
   "name": "guillotine-packer",
-  "version": "0.0.0",
+  "version": "0.0.0-development",
   "description": "Guillotine based packing algorithm",
   "keywords": [
     "bin-packing",
