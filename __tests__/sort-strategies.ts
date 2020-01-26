@@ -11,11 +11,7 @@ const testItems = [
   },
   {
     width: 30,
-    height: 10
-  },
-  {
-    width: 10,
-    height: 10
+    height: 11
   },
   {
     width: 10,
@@ -57,16 +53,12 @@ Array [
     "width": 10,
   },
   Object {
-    "height": 10,
-    "width": 10,
+    "height": 11,
+    "width": 30,
   },
   Object {
     "height": 20,
     "width": 40,
-  },
-  Object {
-    "height": 10,
-    "width": 30,
   },
   Object {
     "height": 10,
@@ -87,11 +79,7 @@ Array [
     "width": 10,
   },
   Object {
-    "height": 10,
-    "width": 10,
-  },
-  Object {
-    "height": 10,
+    "height": 11,
     "width": 30,
   },
   Object {
@@ -118,15 +106,11 @@ Array [
   },
   Object {
     "height": 10,
-    "width": 10,
-  },
-  Object {
-    "height": 10,
-    "width": 30,
-  },
-  Object {
-    "height": 10,
     "width": 40,
+  },
+  Object {
+    "height": 11,
+    "width": 30,
   },
   Object {
     "height": 20,
@@ -147,15 +131,11 @@ Array [
     "width": 10,
   },
   Object {
-    "height": 10,
-    "width": 10,
-  },
-  Object {
     "height": 20,
     "width": 40,
   },
   Object {
-    "height": 10,
+    "height": 11,
     "width": 30,
   },
   Object {
@@ -177,11 +157,7 @@ Array [
     "width": 10,
   },
   Object {
-    "height": 10,
-    "width": 10,
-  },
-  Object {
-    "height": 10,
+    "height": 11,
     "width": 30,
   },
   Object {

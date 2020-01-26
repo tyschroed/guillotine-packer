@@ -71,6 +71,32 @@ Object {
 })
 
 test('best short side fit', () => {
+  const rectangles = [
+    {
+      width: 100,
+      height: 25,
+      x: 0,
+      y: 0,
+      bin: 0,
+      id: '1'
+    },
+    {
+      width: 30,
+      height: 30,
+      x: 0,
+      y: 0,
+      bin: 0,
+      id: '2'
+    },
+    {
+      width: 10,
+      height: 200,
+      x: 0,
+      y: 0,
+      bin: 0,
+      id: '3'
+    }
+  ]
   const sorter = GetSelectionImplementation(SelectionStrategy.BEST_SHORT_SIDE_FIT)
   const selected = sorter.select(rectangles, item1)
 
