@@ -1,0 +1,9 @@
+{
+  "mode": "library",
+  "out": "docs",
+  "theme": "minimal",
+  "inputFiles": ["./src"],
+  "entryPoint": "\"guillotine-packer\"",
+  "toc": "parseDimension",
+  "gaID": "UA-155991675-2"
+}
