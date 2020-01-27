@@ -37,15 +37,13 @@ Array [
 test('pack multiple bins', () => {
   const items = [
     {
-      name: 'item1',
       width: 30,
       height: 40
-    } as Item,
+    },
     {
-      name: 'item2',
       width: 30,
       height: 40
-    } as Item
+    }
   ]
 
   const result = packer({
@@ -60,9 +58,7 @@ Array [
     Object {
       "bin": 1,
       "height": 30,
-      "item": Object {
-        "name": "item1",
-      },
+      "item": Object {},
       "width": 40,
       "x": 0,
       "y": 0,
@@ -72,9 +68,7 @@ Array [
     Object {
       "bin": 2,
       "height": 30,
-      "item": Object {
-        "name": "item2",
-      },
+      "item": Object {},
       "width": 40,
       "x": 0,
       "y": 0,
