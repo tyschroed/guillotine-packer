@@ -1,10 +1,5 @@
 import { Rectangle, Item } from './types'
 
-type SelectionResult = {
-  selectedRectangle: Rectangle
-  index: number
-}
-
 export enum SelectionStrategy {
   BEST_SHORT_SIDE_FIT,
   BEST_LONG_SIDE_FIT,
@@ -12,74 +7,37 @@ export enum SelectionStrategy {
 }
 
 abstract class SelectionImplementation {
-  abstract selectFromAvailable(
-    freeRectangles: Rectangle[],
-    itemToPlace: Item
-  ): SelectionResult | null
-  select(freeRectangles: Rectangle[], itemToPlace: Item) {
-    return this.selectFromAvailable(
-      freeRectangles.filter(
+  abstract generateSortValue(freeRectangle: Rectangle, itemToPlace: Item): number
+  select(freeRectangles: Rectangle[], itemToPlace: Item): Rectangle | null {
+    const [bestRect] = freeRectangles
+      .filter(
         freeRect =>
           freeRect.width - itemToPlace.width >= 0 && freeRect.height - itemToPlace.height >= 0
-      ),
-      itemToPlace
-    )
+      )
+      .map(r => ({ rectangle: r, sortValue: this.generateSortValue(r, itemToPlace) }))
+      .sort((a, b) => (a.sortValue > b.sortValue ? 1 : -1))
+
+    return bestRect ? bestRect.rectangle : null
   }
 }
 
 class BestShortSideFit extends SelectionImplementation {
-  selectFromAvailable(freeRectangles: Rectangle[], itemToPlace: Item) {
+  generateSortValue(freeRectangle: Rectangle, itemToPlace: Item) {
     const { width, height } = itemToPlace
-    const [rect] = freeRectangles
-      .map((freeRect, rectIndex) => ({
-        shortSideLeftover: Math.min(freeRect.width - width, freeRect.height - height),
-        rectangleIndex: rectIndex
-      }))
-      .sort((a, b) => (a.shortSideLeftover > b.shortSideLeftover ? 1 : -1))
-    if (!rect) {
-      return null
-    }
-    return {
-      selectedRectangle: freeRectangles[rect.rectangleIndex],
-      index: rect.rectangleIndex
-    }
+    return Math.min(freeRectangle.width - width, freeRectangle.height - height)
   }
 }
 
 class BestLongSideFit extends SelectionImplementation {
-  selectFromAvailable(freeRectangles: Rectangle[], itemToPlace: Item) {
+  generateSortValue(freeRectangle: Rectangle, itemToPlace: Item) {
     const { width, height } = itemToPlace
-    const [rect] = freeRectangles
-      .map((freeRect, rectIndex) => ({
-        longSideLeftover: Math.max(freeRect.width - width, freeRect.height - height),
-        rectangleIndex: rectIndex
-      }))
-      .sort((a, b) => (a.longSideLeftover > b.longSideLeftover ? 1 : -1))
-    if (!rect) {
-      return null
-    }
-    return {
-      selectedRectangle: freeRectangles[rect.rectangleIndex],
-      index: rect.rectangleIndex
-    }
+    return Math.max(freeRectangle.width - width, freeRectangle.height - height)
   }
 }
 
 class BestAreaFit extends SelectionImplementation {
-  selectFromAvailable(freeRectangles: Rectangle[], itemToPlace: Item) {
-    const [rect] = freeRectangles
-      .map((freeRect, rectIndex) => ({
-        area: freeRect.width * freeRect.height,
-        rectangleIndex: rectIndex
-      }))
-      .sort((a, b) => (a.area > b.area ? 1 : -1))
-    if (!rect) {
-      return null
-    }
-    return {
-      selectedRectangle: freeRectangles[rect.rectangleIndex],
-      index: rect.rectangleIndex
-    }
+  generateSortValue(freeRectangle: Rectangle) {
+    return freeRectangle.width * freeRectangle.height
   }
 }
 

@@ -1,8 +1,10 @@
 import debugLib from 'debug'
-const debug = debugLib('guillotine-packer')
+const debug = debugLib('guillotine-packer:split-strategies')
 import { Rectangle, Item } from './types'
 
 // implementations based off of http://pds25.egloos.com/pds/201504/21/98/RectangleBinPack.pdf
+
+const createSplitRectangle = (rectangle: Rectangle) => ({ ...rectangle, splitFrom: rectangle.id })
 
 abstract class Splitter {
   constructor(public kerfSize: number) {}
@@ -10,32 +12,31 @@ abstract class Splitter {
   protected splitHorizontally(rectangle: Rectangle, item: Item): Rectangle[] {
     debug(`splitting ${rectangle.id} horizontally`)
     const rectangle1 = {
-      ...this._split(rectangle),
+      ...createSplitRectangle(rectangle),
       x: rectangle.x + item.width + this.kerfSize,
       width: rectangle.width - item.width - this.kerfSize,
       height: item.height,
       id: 'sh-r1'
     }
     const rectangle2 = {
-      ...this._split(rectangle),
+      ...createSplitRectangle(rectangle),
       y: rectangle.y + item.height + this.kerfSize,
       height: rectangle.height - item.height - this.kerfSize,
       id: 'sh-r2'
     }
-    debug('horizontal rectangles', [rectangle1, rectangle2])
     return [rectangle1, rectangle2]
   }
   protected splitVertically(rectangle: Rectangle, item: Item): Rectangle[] {
     debug(`splitting ${rectangle.id} vertically`)
     const rectangle1 = {
-      ...this._split(rectangle),
+      ...createSplitRectangle(rectangle),
       y: rectangle.y + item.height + this.kerfSize,
       width: item.width,
       height: rectangle.height - item.height - this.kerfSize,
       id: 'sh-r1'
     }
     const rectangle2 = {
-      ...this._split(rectangle),
+      ...createSplitRectangle(rectangle),
       x: rectangle.x + item.width + this.kerfSize,
       y: rectangle.y,
       width: rectangle.width - item.width - this.kerfSize,
@@ -43,7 +44,6 @@ abstract class Splitter {
     }
     return [rectangle1, rectangle2]
   }
-  private _split = (rectangle: Rectangle) => ({ ...rectangle, splitFrom: rectangle.id })
 }
 
 class ShortAxisSplit extends Splitter {

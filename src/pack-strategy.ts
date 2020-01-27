@@ -1,5 +1,5 @@
 import debugLib from 'debug'
-const debug = debugLib('guillotine-packer')
+const debug = debugLib('guillotine-packer:pack-strategy')
 import { Rectangle, Item } from './types'
 import { SelectionStrategy, GetSelectionImplementation } from './selection-strategies'
 import { SortDirection, SortStrategy, GetSortImplementation } from './sort-strategies'
@@ -44,8 +44,8 @@ export function PackStrategy({
   const freeRectangles: Rectangle[] = []
 
   const createBin = () => {
-    debug(`creating bin ${binCount}`)
     binCount++
+    debug(`creating bin ${binCount}`)
     freeRectangles.push({
       width: binWidth,
       height: binHeight,
@@ -66,7 +66,7 @@ export function PackStrategy({
   }
 
   const splitRectangle = ({ rectangle, item }: { rectangle: Rectangle; item: Item }) => {
-    return splitter.split(rectangle, item).filter(r => r.width !== 0 && r.height !== 0)
+    return splitter.split(rectangle, item).filter(r => r.width > 0 && r.height > 0)
   }
 
   const getSelectionOption = (item: Item) => {
@@ -75,7 +75,7 @@ export function PackStrategy({
     if (!rectangle) {
       return null
     }
-    const splitRectangles = splitRectangle({ rectangle: rectangle.selectedRectangle, item })
+    const splitRectangles = splitRectangle({ rectangle: rectangle, item })
     return {
       rectangle,
       splitRectangles,
@@ -136,12 +136,14 @@ export function PackStrategy({
         item: otherItemProps,
         width,
         height,
-        x: rectangle.selectedRectangle.x,
-        y: rectangle.selectedRectangle.y,
-        bin: rectangle.selectedRectangle.bin
+        x: rectangle.x,
+        y: rectangle.y,
+        bin: rectangle.bin
       }
       debug('packed item', packedItem)
-      freeRectangles.splice(rectangle.index, 1, ...splitRectangles)
+      debug('free rectangles pre split', freeRectangles)
+      const rectIndex = freeRectangles.findIndex(r => r === rectangle)
+      freeRectangles.splice(rectIndex, 1, ...splitRectangles)
       debug('free rectangles post split', freeRectangles)
       return packedItem
     })

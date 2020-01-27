@@ -38,15 +38,12 @@ test('best area fit', () => {
 
   expect(selected).toMatchInlineSnapshot(`
 Object {
-  "index": 1,
-  "selectedRectangle": Object {
-    "bin": 0,
-    "height": 30,
-    "id": "2",
-    "width": 30,
-    "x": 0,
-    "y": 0,
-  },
+  "bin": 0,
+  "height": 30,
+  "id": "2",
+  "width": 30,
+  "x": 0,
+  "y": 0,
 }
 `)
 })
@@ -57,15 +54,12 @@ test('best long side fit', () => {
 
   expect(selected).toMatchInlineSnapshot(`
 Object {
-  "index": 1,
-  "selectedRectangle": Object {
-    "bin": 0,
-    "height": 30,
-    "id": "2",
-    "width": 30,
-    "x": 0,
-    "y": 0,
-  },
+  "bin": 0,
+  "height": 30,
+  "id": "2",
+  "width": 30,
+  "x": 0,
+  "y": 0,
 }
 `)
 })
@@ -102,15 +96,12 @@ test('best short side fit', () => {
 
   expect(selected).toMatchInlineSnapshot(`
 Object {
-  "index": 2,
-  "selectedRectangle": Object {
-    "bin": 0,
-    "height": 200,
-    "id": "3",
-    "width": 10,
-    "x": 0,
-    "y": 0,
-  },
+  "bin": 0,
+  "height": 200,
+  "id": "3",
+  "width": 10,
+  "x": 0,
+  "y": 0,
 }
 `)
 })
