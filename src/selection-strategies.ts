@@ -12,18 +12,29 @@ export enum SelectionStrategy {
 }
 
 abstract class SelectionImplementation {
-  abstract select(freeRectangles: Rectangle[], itemToPlace: Item): SelectionResult | null
+  abstract selectFromAvailable(
+    freeRectangles: Rectangle[],
+    itemToPlace: Item
+  ): SelectionResult | null
+  select(freeRectangles: Rectangle[], itemToPlace: Item) {
+    return this.selectFromAvailable(
+      freeRectangles.filter(
+        freeRect =>
+          freeRect.width - itemToPlace.width >= 0 && freeRect.height - itemToPlace.height >= 0
+      ),
+      itemToPlace
+    )
+  }
 }
 
 class BestShortSideFit extends SelectionImplementation {
-  select(freeRectangles: Rectangle[], itemToPlace: Item) {
+  selectFromAvailable(freeRectangles: Rectangle[], itemToPlace: Item) {
     const { width, height } = itemToPlace
     const [rect] = freeRectangles
       .map((freeRect, rectIndex) => ({
         shortSideLeftover: Math.min(freeRect.width - width, freeRect.height - height),
         rectangleIndex: rectIndex
       }))
-      .filter(r => r.shortSideLeftover >= 0)
       .sort((a, b) => (a.shortSideLeftover > b.shortSideLeftover ? 1 : -1))
     if (!rect) {
       return null
@@ -36,14 +47,13 @@ class BestShortSideFit extends SelectionImplementation {
 }
 
 class BestLongSideFit extends SelectionImplementation {
-  select(freeRectangles: Rectangle[], itemToPlace: Item) {
+  selectFromAvailable(freeRectangles: Rectangle[], itemToPlace: Item) {
     const { width, height } = itemToPlace
     const [rect] = freeRectangles
       .map((freeRect, rectIndex) => ({
         longSideLeftover: Math.max(freeRect.width - width, freeRect.height - height),
         rectangleIndex: rectIndex
       }))
-      .filter(r => r.longSideLeftover >= 0)
       .sort((a, b) => (a.longSideLeftover > b.longSideLeftover ? 1 : -1))
     if (!rect) {
       return null
@@ -56,14 +66,12 @@ class BestLongSideFit extends SelectionImplementation {
 }
 
 class BestAreaFit extends SelectionImplementation {
-  select(freeRectangles: Rectangle[], itemToPlace: Item) {
+  selectFromAvailable(freeRectangles: Rectangle[], itemToPlace: Item) {
     const [rect] = freeRectangles
       .map((freeRect, rectIndex) => ({
-        fits: freeRect.width >= itemToPlace.width && freeRect.height >= itemToPlace.height,
         area: freeRect.width * freeRect.height,
         rectangleIndex: rectIndex
       }))
-      .filter(r => r.fits)
       .sort((a, b) => (a.area > b.area ? 1 : -1))
     if (!rect) {
       return null

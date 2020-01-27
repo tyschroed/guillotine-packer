@@ -44,6 +44,7 @@ export function PackStrategy({
   const freeRectangles: Rectangle[] = []
 
   const createBin = () => {
+    debug(`creating bin ${binCount}`)
     binCount++
     freeRectangles.push({
       width: binWidth,
@@ -70,6 +71,7 @@ export function PackStrategy({
 
   const getSelectionOption = (item: Item) => {
     const rectangle = selector.select(freeRectangles, item)
+    debug(`for item ${JSON.stringify(item)}, selected ${JSON.stringify(rectangle)}`)
     if (!rectangle) {
       return null
     }

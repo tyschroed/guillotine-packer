@@ -22,7 +22,8 @@ abstract class Splitter {
       height: rectangle.height - item.height - this.kerfSize,
       id: 'sh-r2'
     }
-
+    //todo: 1
+    debug('horizontal rectangles', [rectangle1, rectangle2])
     return [rectangle1, rectangle2]
   }
   protected splitVertically(rectangle: Rectangle, item: Item): Rectangle[] {

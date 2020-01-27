@@ -34,6 +34,56 @@ Array [
 `)
 })
 
+test('pack multiple bins', () => {
+  const items = [
+    {
+      name: 'item1',
+      width: 30,
+      height: 40
+    } as Item,
+    {
+      name: 'item2',
+      width: 30,
+      height: 40
+    } as Item
+  ]
+
+  const result = packer({
+    binHeight: 30,
+    binWidth: 40,
+    items
+  })
+
+  expect(result).toMatchInlineSnapshot(`
+Array [
+  Array [
+    Object {
+      "bin": 1,
+      "height": 30,
+      "item": Object {
+        "name": "item1",
+      },
+      "width": 40,
+      "x": 0,
+      "y": 0,
+    },
+  ],
+  Array [
+    Object {
+      "bin": 2,
+      "height": 30,
+      "item": Object {
+        "name": "item2",
+      },
+      "width": 40,
+      "x": 0,
+      "y": 0,
+    },
+  ],
+]
+`)
+})
+
 test('should rotate items if it results in more efficent packing', () => {
   const result = packer(
     {

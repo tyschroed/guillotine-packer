@@ -34,12 +34,11 @@ function Packer(
       .map(value => value as keyof T)
   }
 
-  const selectionStrategies = selectionStrategy
-    ? [selectionStrategy]
-    : enumToArray(SelectionStrategy)
+  const selectionStrategies =
+    selectionStrategy !== undefined ? [selectionStrategy] : enumToArray(SelectionStrategy)
 
-  const splitStrategies = splitStrategy ? [splitStrategy] : enumToArray(SplitStrategy)
-  const sortStrategies = sortStrategy ? [sortStrategy] : enumToArray(SortStrategy)
+  const splitStrategies = splitStrategy !== undefined ? [splitStrategy] : enumToArray(SplitStrategy)
+  const sortStrategies = sortStrategy !== undefined ? [sortStrategy] : enumToArray(SortStrategy)
 
   const allStrategies = cartesian(selectionStrategies, splitStrategies, sortStrategies, [
     SortDirection.ASC,

@@ -6,15 +6,31 @@ const testItems = [
     height: 20
   },
   {
-    width: 40,
+    width: 41,
     height: 10
   },
   {
     width: 30,
-    height: 11
+    height: 10
   },
   {
     width: 10,
+    height: 11
+  },
+  {
+    width: 15,
+    height: 9
+  },
+  {
+    width: 15,
+    height: 8
+  },
+  {
+    width: 14,
+    height: 10
+  },
+  {
+    width: 15,
     height: 10
   }
 ]
@@ -25,7 +41,7 @@ test('area sort', () => {
 
   expect(item1).toMatchInlineSnapshot(`
 Object {
-  "height": 10,
+  "height": 11,
   "width": 10,
 }
 `)
@@ -49,12 +65,24 @@ test('differences sort', () => {
   expect(items).toMatchInlineSnapshot(`
 Array [
   Object {
-    "height": 10,
+    "height": 11,
     "width": 10,
   },
   Object {
-    "height": 11,
-    "width": 30,
+    "height": 10,
+    "width": 14,
+  },
+  Object {
+    "height": 10,
+    "width": 15,
+  },
+  Object {
+    "height": 9,
+    "width": 15,
+  },
+  Object {
+    "height": 8,
+    "width": 15,
   },
   Object {
     "height": 20,
@@ -62,7 +90,11 @@ Array [
   },
   Object {
     "height": 10,
-    "width": 40,
+    "width": 30,
+  },
+  Object {
+    "height": 10,
+    "width": 41,
   },
 ]
 `)
@@ -75,20 +107,36 @@ test('long side sort', () => {
   expect(items).toMatchInlineSnapshot(`
 Array [
   Object {
-    "height": 10,
+    "height": 11,
     "width": 10,
   },
   Object {
-    "height": 11,
-    "width": 30,
+    "height": 10,
+    "width": 14,
+  },
+  Object {
+    "height": 8,
+    "width": 15,
+  },
+  Object {
+    "height": 9,
+    "width": 15,
   },
   Object {
     "height": 10,
-    "width": 40,
+    "width": 15,
+  },
+  Object {
+    "height": 10,
+    "width": 30,
   },
   Object {
     "height": 20,
     "width": 40,
+  },
+  Object {
+    "height": 10,
+    "width": 41,
   },
 ]
 `)
@@ -101,16 +149,32 @@ test('short side sort', () => {
   expect(items).toMatchInlineSnapshot(`
 Array [
   Object {
-    "height": 10,
+    "height": 8,
+    "width": 15,
+  },
+  Object {
+    "height": 9,
+    "width": 15,
+  },
+  Object {
+    "height": 11,
     "width": 10,
   },
   Object {
     "height": 10,
-    "width": 40,
+    "width": 14,
   },
   Object {
-    "height": 11,
+    "height": 10,
+    "width": 15,
+  },
+  Object {
+    "height": 10,
     "width": 30,
+  },
+  Object {
+    "height": 10,
+    "width": 41,
   },
   Object {
     "height": 20,
@@ -127,20 +191,36 @@ test('ratio sort', () => {
   expect(items).toMatchInlineSnapshot(`
 Array [
   Object {
-    "height": 10,
+    "height": 11,
     "width": 10,
+  },
+  Object {
+    "height": 10,
+    "width": 14,
+  },
+  Object {
+    "height": 10,
+    "width": 15,
+  },
+  Object {
+    "height": 9,
+    "width": 15,
+  },
+  Object {
+    "height": 8,
+    "width": 15,
   },
   Object {
     "height": 20,
     "width": 40,
   },
   Object {
-    "height": 11,
+    "height": 10,
     "width": 30,
   },
   Object {
     "height": 10,
-    "width": 40,
+    "width": 41,
   },
 ]
 `)
@@ -153,16 +233,32 @@ test('perimeter sort', () => {
   expect(items).toMatchInlineSnapshot(`
 Array [
   Object {
-    "height": 10,
+    "height": 11,
     "width": 10,
   },
   Object {
-    "height": 11,
+    "height": 8,
+    "width": 15,
+  },
+  Object {
+    "height": 9,
+    "width": 15,
+  },
+  Object {
+    "height": 10,
+    "width": 14,
+  },
+  Object {
+    "height": 10,
+    "width": 15,
+  },
+  Object {
+    "height": 10,
     "width": 30,
   },
   Object {
     "height": 10,
-    "width": 40,
+    "width": 41,
   },
   Object {
     "height": 20,
