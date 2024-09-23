@@ -116,7 +116,7 @@
     "prompt": "^1.0.0",
     "replace-in-file": "^3.4.2",
     "rimraf": "^2.6.2",
-    "rollup": "^1.29.1",
+    "rollup": "^3.29.5",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "semantic-release": "^17.2.3",
     "shelljs": "^0.8.3",
