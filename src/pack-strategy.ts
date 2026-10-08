@@ -106,7 +106,7 @@ export function PackStrategy({
       const originalMax = getBiggestSplitRectangle(originalOption)
       const rotatedMax = getBiggestSplitRectangle(rotatedOption)
       debug(`Original max area ${originalMax}, rotated max area ${rotatedMax}`)
-      if (getBiggestSplitRectangle(originalOption) >= getBiggestSplitRectangle(rotatedOption)) {
+      if (originalMax >= rotatedMax) {
         debug(`Going with original placement option`)
         return originalOption
       } else {
